@@ -3,12 +3,22 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import { BrowserRouter } from 'react-router-dom'
+import { AuthProvider } from './contex/auth.js';
+import { SearchProvider } from './contex/Search.js';
+import { CardProvider } from './contex/Card.js';
+import 'antd/dist/reset.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <AuthProvider>
+    <SearchProvider>
+      <CardProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </CardProvider>
+    </SearchProvider>
+  </AuthProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
