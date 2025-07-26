@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Layout from './../../layout/Layout';
 import './styles/AuthRegister.css'
 import toast from 'react-hot-toast';
-import { useNavigate , useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios'
 import { useAuth } from '../../../contex/auth.js';
 
@@ -10,7 +10,7 @@ import { useAuth } from '../../../contex/auth.js';
 const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [auth,setAuth] = useAuth() 
+    const [auth, setAuth] = useAuth()
 
     const navigate = useNavigate()
     const location = useLocation()
@@ -22,6 +22,7 @@ const Login = () => {
                 email,
                 password,
             })
+
             if (res && res.data.success) {
                 navigate("/")
                 toast.success("User Login successfully")
@@ -29,15 +30,16 @@ const Login = () => {
                     ...auth,
                     user: res.data.user,
                     token: res.data.token,
-                  });
-                localStorage.setItem('auth',JSON.stringify(res.data))
-                navigate(location.state ||"/")
+                });
+                localStorage.setItem('auth', JSON.stringify(res.data))
+                navigate(location.state || "/")
             }
             else {
                 toast.error(res.data.message || 'User not register')
             }
         } catch (error) {
-            console.log(error)
+            console.log(process.env.REACT_APP_API)
+            console.log(error.message)
             toast.error('user Not Found')
         }
     }
@@ -49,7 +51,7 @@ const Login = () => {
                         <h1>Login Here</h1>
                         <br />
                         <form onSubmit={handleSubmit}>
-                           
+
 
                             <div className="form-group my-3">
                                 <label htmlFor="exampleInputEmail1">Email</label>
@@ -60,8 +62,8 @@ const Login = () => {
                                 <label htmlFor="exampleInputPassword1">Password</label>
                                 <input onChange={(e) => setPassword(e.target.value)} required value={password} type="password" className="form-control" placeholder="Password" />
                             </div>
-                            <button type="button" className="btn btn-dark my-1" onClick={()=>{navigate('/forgot-password')}}>Forgot Password?</button>
-                            
+                            <button type="button" className="btn btn-dark my-1" onClick={() => { navigate('/forgot-password') }}>Forgot Password?</button>
+
                             <button type="submit" className="btn btn-primary my-3">Login</button>
                         </form>
                     </div>
